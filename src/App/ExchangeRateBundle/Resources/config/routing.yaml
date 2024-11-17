@@ -1,0 +1,3 @@
+exchange_rates:
+  path: /api/exchange-rates
+  controller: App\ExchangeRateBundle\Controller\ExchangeRatesController::fetchRates
