@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    supported_currencies: ['USD', 'CZK', 'IDR', 'BRL', 'EUR'] # List of currencies supported by the application
+    nbp_api_base_url: 'https://api.nbp.pl/api/exchangerates/'   # Base URL for the NBP API used to fetch exchange rates
 
 services:
     # default configuration for services in *this* file
@@ -28,3 +30,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Register controllers located in the ExchangeRateBundle\Controller namespace
+    App\ExchangeRateBundle\Controller\:
+        resource: '../src/App/ExchangeRateBundle/Controller/'
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    # Register the ExchangeRateService with the necessary arguments
+    App\ExchangeRateBundle\Service\ExchangeRateService:
+        arguments:
+            $nbpApiUrl: '%nbp_api_base_url%'              # Inject the NBP API base URL from the parameters
+            $supportedCurrencies: '%supported_currencies%' # Inject the list of supported currencies from the parameters

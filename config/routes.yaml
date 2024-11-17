@@ -8,6 +8,9 @@ setupcheck:
     path: /api/setup-check
     controller: App\Controller\DefaultController::setupCheck
 
+exchange_rates:
+    resource: '../src/App/ExchangeRateBundle/Resources/config/routing.yaml'
+
 index:
     path: /{wildcard}
     defaults: {
